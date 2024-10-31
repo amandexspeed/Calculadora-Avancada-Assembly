@@ -1,27 +1,27 @@
 .data
 menu: .asciiz "\nMenu:\n1 - Calculadora simples\n2 - Calculadora de impostos\n3 - Calculadora para TI\nEscolha uma opcao: "
 
-menuCalcSimples: .asciiz "\nOpÁıes:\n1 - Soma\n2 - SubtraÁ„o\n3 - MultiplicaÁ„o\n4 - Divis„o\n5 - PotÍncia\nEscolha uma opcao: "
-menuCalcImpostos: .asciiz "\nOpÁıes:\n1 - INSS\n2 - Imposto de Renda - Pessoa fÌsica\n3 - Imposto de Renda - Pessoa jurÌdica\n4 - IPVA\n5 - IPTU\nEscolha uma opcao: "
-menuCalcTI: .asciiz  "Para qual base vocÍ deseja converter?\n2 - Bin·rio\n16 - Hexadecimal\n"
-#menuCalcTI2: .asciiz "Qual È a base do n˙mero original?\n2 - Bin·rio\n8 - Octal\n10 - Decimal\n16 - Hexadecimal\n"
+menuCalcSimples: .asciiz "\nOp√ß√µes:\n1 - Soma\n2 - Subtra√ß√£o\n3 - Multiplica√ß√£o\n4 - Divis√£o\n5 - Pot√™ncia\nEscolha uma opcao: "
+menuCalcImpostos: .asciiz "\nOp√ß√µes:\n1 - INSS\n2 - Imposto de Renda - Pessoa f√≠sica\n3 - Imposto de Renda - Pessoa jur√≠dica\n4 - IPVA\n5 - IPTU\nEscolha uma opcao: "
+menuCalcTI: .asciiz  "De qual base voc√™ deseja converter para decimal?\n2 - Bin√°rio\n16 - Hexadecimal\n"
+#menuCalcTI2: .asciiz "Qual √© a base do n√∫mero original?\n2 - Bin√°rio\n8 - Octal\n10 - Decimal\n16 - Hexadecimal\n"
 
-strCalcTI: .asciiz "\nDigite o n˙mero desejado para convers„o: "
-strLaco: .asciiz "\nDeseja fazer mais alguma operaÁ„o? Digite 1 para sim e qualquer outro n˙mero para n„o: "
+strCalcTI: .asciiz "\nDigite o n√∫mero desejado para convers√£o: "
+strLaco: .asciiz "\nDeseja fazer mais alguma opera√ß√£o? Digite 1 para sim e qualquer outro n√∫mero para n√£o: "
 strResultado: .asciiz "\nO resultado foi:"
-strCalculoInvalido: .asciiz "\nN„o È possÌvel realizar essa operaÁ„o"
+strCalculoInvalido: .asciiz "\nN√£o √© poss√≠vel realizar essa opera√ß√£o"
 strCalcSimplesOp1: .asciiz "\nDigite o primeiro termo: "
 strCalcSimplesOp2: .asciiz "\nDigite o segundo termo: "
-strImpostoRendaPF1: .asciiz "\nDigite o sal·rio: "
+strImpostoRendaPF1: .asciiz "\nDigite o sal√°rio: "
 strImpostoRendaPF2: .asciiz "\nDigite o valor a descontar: "
 strImpostoRendaPJ: .asciiz "\nDigite o lucro: "
-strInss: .asciiz "\nDigite o sal·rio: "
-strIptu1: .asciiz "\nDigite o valor do imÛvel: "
+strInss: .asciiz "\nDigite o sal√°rio: "
+strIptu1: .asciiz "\nDigite o valor do im√≥vel: "
 strIptu2: .asciiz "\nDigite a aliquota(em percentual): "
-strIpva1: .asciiz "\nDigite o valor do automÛvel: "
+strIpva1: .asciiz "\nDigite o valor do autom√≥vel: "
 strIpva2: .asciiz "\nDigite a aliquota(em percentual): "
-strIsento: .asciiz "\nVocÍ È isento de imposto de renda!"
-opInv: .asciiz "\nOpÁ„o inv·lida! Digite outra opÁ„o: "
+strIsento: .asciiz "\nVoc√™ √© isento de imposto de renda!"
+opInv: .asciiz "\nOp√ß√£o inv√°lida! Digite outra op√ß√£o: "
 
 opcao: .word 0
 opcaoMenuSec: .word 0
@@ -42,33 +42,33 @@ buffer: .space 32
 .globl main
 
 
-#Registradores para n„o sobreescrever e seus significados:
-# $s0 -> 1∫ escolha(modulo usado)
-# $s1 -> 2∫ escolha(opÁ„o escolhida do mÛdulo) 
+#Registradores para n√£o sobreescrever e seus significados:
+# $s0 -> 1¬∫ escolha(modulo usado)
+# $s1 -> 2¬∫ escolha(op√ß√£o escolhida do m√≥dulo) 
 # $s2 -> Resultado
-# $a1 -> 1∫ operando
-# $a2 -> 2∞ operando
+# $a1 -> 1¬∫ operando
+# $a2 -> 2¬∞ operando
 # $f2 -> Resultado(Impostos)
-# $f0 -> 1∫ operando(Impostos)
-# $f1 -> 2∞ operando(Impostos)
+# $f0 -> 1¬∫ operando(Impostos)
+# $f1 -> 2¬∞ operando(Impostos)
 
 
 
 main:
     # Exibe o menu
     li $v0, 4          # syscall para imprimir string
-    la $a0, menu       # carrega o endereÁo da string do menu
+    la $a0, menu       # carrega o endere√ßo da string do menu
     syscall
 
-    # Captura a resposta do usu·rio
+    # Captura a resposta do usu√°rio
     li $v0, 5          # syscall para ler inteiro
     syscall
-    sw $v0, opcao      # armazena a resposta na vari·vel opcao
+    sw $v0, opcao      # armazena a resposta na vari√°vel opcao
 
-    # Carrega a resposta do usu·rio
+    # Carrega a resposta do usu√°rio
     lw $s0, opcao
 
-    # Verifica a opÁ„o escolhida
+    # Verifica a op√ß√£o escolhida
     li $t0, 1
     beq $s0, $t0, opcao1
     li $t0, 2
@@ -76,7 +76,7 @@ main:
     li $t0, 3
     beq $s0, $t0, opcao3
 
-    # Se a opÁ„o n„o for v·lida, avisa ao usu·rio
+    # Se a op√ß√£o n√£o for v√°lida, avisa ao usu√°rio
     j opcaoInvalida
 
 opcao1:
@@ -85,38 +85,38 @@ opcao1:
     la $a0, menuCalcSimples
     syscall
     
-    # Captura a resposta do usu·rio
+    # Captura a resposta do usu√°rio
     li $v0, 5
     syscall
     sw $v0, opcaoMenuSec
     
-    # Carrega a resposta do usu·rio
+    # Carrega a resposta do usu√°rio
     lw $s1, opcaoMenuSec
     
-    # Verifica se a opÁ„o escolhida È v·lida
+    # Verifica se a op√ß√£o escolhida √© v√°lida
     
     blez $s1,opcaoInvalida  #menor ou igual a zero
     bgt $s1,5,opcaoInvalida
     
-    # Exibe mensagem pra o primeiro operando caso a opÁ„o seja v·lida
+    # Exibe mensagem pra o primeiro operando caso a op√ß√£o seja v√°lida
     li $v0, 4          # syscall para imprimir string
-    la $a0, strCalcSimplesOp1       # carrega o endereÁo da string
+    la $a0, strCalcSimplesOp1       # carrega o endere√ßo da string
     syscall
 
-    # Captura a resposta do usu·rio
+    # Captura a resposta do usu√°rio
     li $v0, 5          # syscall para ler inteiro
     syscall
-    sw $v0, operando1      # armazena a resposta na vari·vel 
+    sw $v0, operando1      # armazena a resposta na vari√°vel 
    	 
     # Exibe mensagem pra o segundo operando 
     li $v0, 4          # syscall para imprimir string
-    la $a0, strCalcSimplesOp2       # carrega o endereÁo da string
+    la $a0, strCalcSimplesOp2       # carrega o endere√ßo da string
     syscall
 
-   # Captura a resposta do usu·rio
+   # Captura a resposta do usu√°rio
    li $v0, 5          # syscall para ler inteiro
    syscall
-   sw $v0, operando2      # armazena a resposta na vari·vel 
+   sw $v0, operando2      # armazena a resposta na vari√°vel 
    
    #Passa a resposta pra registrador
    lw $a1, operando1
@@ -148,28 +148,28 @@ opcao1:
      jal divisao
      bgtz $v0,imprimeResultado
      beqz $a2,calculoInvalido
-     #Essas verificaÁıes s„o para detectar divisıes por 0, j· que se o 2∞ par‚metro for 0 a funÁ„o retorna 0
+     #Essas verifica√ß√µes s√£o para detectar divis√µes por 0, j√° que se o 2¬∞ par√¢metro for 0 a fun√ß√£o retorna 0
      
    chamaPotencia:
      jal potencia
      j imprimeResultado	
      
 opcao2:
-    # CÛdigo para a Calculadora de impostos
+    # C√≥digo para a Calculadora de impostos
     # Exibe o menu da calculadora de impostos
     li $v0, 4
     la $a0, menuCalcImpostos
     syscall
     
-    # Captura a resposta do usu·rio
+    # Captura a resposta do usu√°rio
     li $v0, 5
     syscall
     sw $v0, opcaoMenuSec
     
-    # Carrega a resposta do usu·rio
+    # Carrega a resposta do usu√°rio
     lw $s1, opcaoMenuSec
     
-    # Verifica se a opÁ„o escolhida È v·lida
+    # Verifica se a op√ß√£o escolhida √© v√°lida
     
     blez $s1,opcaoInvalida  #menor ou igual a zero
     bgt $s1,5,opcaoInvalida
@@ -186,7 +186,7 @@ opcao2:
   	  la $a0, strInss
     	  syscall
     
-    	  li $v0, 6          # syscall para ler float(Sal·rio)
+    	  li $v0, 6          # syscall para ler float(Sal√°rio)
     	  syscall
     	  swc1 $f0, operando1Float 
     	  
@@ -202,7 +202,7 @@ opcao2:
     	  la $a0, strImpostoRendaPF1
     	  syscall
     
-    	  li $v0, 6          # syscall para ler float(Sal·rio)
+    	  li $v0, 6          # syscall para ler float(Sal√°rio)
     	  syscall
     	  swc1 $f0, operando1Float 
     
@@ -214,7 +214,7 @@ opcao2:
     	  syscall
    	  swc1 $f0, operando2Float 
     
-    	  # Carrega a resposta do usu·rio
+    	  # Carrega a resposta do usu√°rio
     	  lwc1 $f0, operando1Float 
     	  lwc1 $f1, operando2Float 
   	
@@ -223,7 +223,7 @@ opcao2:
      	  c.eq.s $f2,$f3
      	  bc1f imprimeResultadoFloat
      	  li $v0, 4          # syscall para imprimir string
-    	  la $a0, strIsento       # carrega o endereÁo da string
+    	  la $a0, strIsento       # carrega o endere√ßo da string
    	  syscall
    	  j laco
      	  
@@ -257,11 +257,11 @@ opcao2:
     	  la $a0, strIpva2
     	  syscall
     
-    	  li $v0, 6          # syscall para ler float(AlÌquota)
+    	  li $v0, 6          # syscall para ler float(Al√≠quota)
     	  syscall
    	  swc1 $f0, operando2Float 
     
-   	  # Carrega a resposta do usu·rio
+   	  # Carrega a resposta do usu√°rio
     	  lwc1 $f0, operando1Float 
    	  lwc1 $f1, operando2Float 
    	
@@ -283,11 +283,11 @@ opcao2:
     	  la $a0, strIptu2
     	  syscall
     
-    	  li $v0, 6          # syscall para ler float(AlÌquota)
+    	  li $v0, 6          # syscall para ler float(Al√≠quota)
     	  syscall
    	  swc1 $f0, operando2Float 
     
-   	  # Carrega a resposta do usu·rio
+   	  # Carrega a resposta do usu√°rio
     	  lwc1 $f0, operando1Float 
    	  lwc1 $f1, operando2Float 
      	
@@ -297,32 +297,32 @@ opcao2:
    
 
 opcao3:
-    # CÛdigo para a Calculadora para TI
+    # C√≥digo para a Calculadora para TI
  
     li $v0, 4          # syscall para imprimir string
-    la $a0, menuCalcTI       # carrega o endereÁo da string do menu
+    la $a0, menuCalcTI       # carrega o endere√ßo da string do menu
     syscall
 
-    # Captura a resposta do usu·rio
+    # Captura a resposta do usu√°rio
     li $v0, 5          # syscall para ler inteiro
     syscall
-    sw $v0, opcao      # armazena a resposta na vari·vel opcao
+    sw $v0, opcao      # armazena a resposta na vari√°vel opcao
 
-    # Carrega a resposta do usu·rio
+    # Carrega a resposta do usu√°rio
     lw $s0, opcao
     
     beq $s0,2,casoStr
     beq $s0,16,casoStr
     j calculoInvalido
     casoStr:
-    	# Exibe mensagem pra o n˙mero caso a opÁ„o seja v·lida
+    	# Exibe mensagem pra o n√∫mero caso a op√ß√£o seja v√°lida
     	li $v0, 4          # syscall para imprimir string
-    	la $a0, strCalcTI   # carrega o endereÁo da string
+    	la $a0, strCalcTI   # carrega o endere√ßo da string
     	syscall
     	
     	li $v0, 8               # syscall para ler uma string
-   	la $a0, buffer          # endereÁo do buffer
-   	li $a1, 32             # tamanho m·ximo da string
+   	la $a0, buffer          # endere√ßo do buffer
+   	li $a1, 32             # tamanho m√°ximo da string
     	syscall                 # chama o syscall
     
 	la $a0, buffer
@@ -339,7 +339,7 @@ imprimeResultado:
      lw $s2,resultado
      
      li $v0, 4          # syscall para imprimir string
-     la $a0, strResultado       # carrega o endereÁo da string
+     la $a0, strResultado       # carrega o endere√ßo da string
      syscall
      
      move $a0,$s2
@@ -354,7 +354,7 @@ imprimeResultadoFloat:
      lwc1 $f12,resultado
      
      li $v0, 4          # syscall para imprimir string
-     la $a0, strResultado       # carrega o endereÁo da string
+     la $a0, strResultado       # carrega o endere√ßo da string
      syscall
      
      li $v0,2
@@ -362,16 +362,16 @@ imprimeResultadoFloat:
      j laco
 
 calculoInvalido:
-    #Caso a operaÁ„o que o usu·rio pedir for inv·lida
+    #Caso a opera√ß√£o que o usu√°rio pedir for inv√°lida
     li $v0, 4          # syscall para imprimir string
-    la $a0, strCalculoInvalido       # carrega o endereÁo da string do mensagem de opÁ„o inv·lida
+    la $a0, strCalculoInvalido       # carrega o endere√ßo da string do mensagem de op√ß√£o inv√°lida
     syscall
     j laco
 
 opcaoInvalida:
-    #Caso o usu·rio digitar uma opÁ„o inv·lida
+    #Caso o usu√°rio digitar uma op√ß√£o inv√°lida
     li $v0, 4          # syscall para imprimir string
-    la $a0, opInv       # carrega o endereÁo da string do mensagem de opÁ„o inv·lida
+    la $a0, opInv       # carrega o endere√ßo da string do mensagem de op√ß√£o inv√°lida
     syscall
     
 laco:
@@ -381,10 +381,10 @@ laco:
     
     li $v0, 5          # syscall para ler inteiro
     syscall
-    sw $v0, opcao      # armazena a resposta na vari·vel opcao
-    lw $t0, opcao      # Carrega a resposta do usu·rio
+    sw $v0, opcao      # armazena a resposta na vari√°vel opcao
+    lw $t0, opcao      # Carrega a resposta do usu√°rio
 
-    # Verifica a opÁ„o escolhida
+    # Verifica a op√ß√£o escolhida
     li $t1, 1
     beq $t0, $t1, main
      
