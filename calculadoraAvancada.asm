@@ -351,7 +351,7 @@ imprimeResultado:
      
 imprimeResultadoFloat:
      swc1 $f2,resultadoFloat
-     lwc1 $f12,resultado
+     lwc1 $f12,resultadoFloat
      
      li $v0, 4          # syscall para imprimir string
      la $a0, strResultado       # carrega o endereço da string
